@@ -30,13 +30,15 @@ const config = {
       'https://kiiroween-retrochat-frontend.vercel.app',
     allowedOrigins: [
       process.env.BETTER_AUTH_CLIENT_URL ||
-        'https://kiiroween-retrochat-frontend.vercel.app',
+      'https://kiiroween-retrochat-frontend.vercel.app',
       ...(process.env.ALLOWED_ORIGINS?.split(',') || []),
     ],
   },
 };
 
 const currentConfig = isProduction ? config.production : config.development;
+
+console.log({ isProduction });
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {

@@ -38,8 +38,6 @@ const config = {
 
 const currentConfig = isProduction ? config.production : config.development;
 
-console.log({ isProduction });
-
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -66,7 +64,8 @@ export const auth = betterAuth({
           secure: isProduction,
           httpOnly: true,
           path: '/',
-          domain: currentConfig.baseURL,
+          // Don't set domain - let the browser handle it
+          // This allows cross-origin cookies with sameSite: 'none'
         },
       },
     },

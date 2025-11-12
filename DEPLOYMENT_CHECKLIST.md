@@ -80,7 +80,7 @@ Look for:
 **Issue: Cookie set but not sent with requests**
 
 - ✅ Verify frontend is using `credentials: 'include'` in fetch
-- ✅ Check cookie domain matches
+- ✅ Check cookie domain is not explicitly set (browser-managed)
 - ✅ Verify `SameSite=None` and `Secure=true`
 
 **Issue: Session returns null**

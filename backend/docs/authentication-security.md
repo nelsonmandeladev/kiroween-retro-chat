@@ -20,15 +20,15 @@ This architecture allows the backend to handle all authentication logic, session
 
 - **HTTP-Only**: Cookies are HTTP-only to prevent XSS attacks
 - **Secure Flag**: Automatically enabled in production (requires HTTPS)
-- **Domain Scoping**: Cookies are scoped to the backend domain for proper cross-origin authentication
-- **SameSite Policy**: Configured for CSRF protection (none in production, lax in development)
+- **Domain Handling**: Domain attribute is not explicitly set, allowing the browser to handle it automatically for better cross-origin compatibility
+- **SameSite Policy**: Configured for CSRF protection (`none` in production with `secure: true`, `lax` in development)
 
 ### Session Management
 
 - **Cookie Cache**: 5-minute cache for improved performance
 - **Session Validation**: All protected endpoints validate session on each request
 - **Automatic Expiration**: Sessions expire based on Better-auth configuration
-- **Cookie Domain**: Session cookies are scoped to the backend domain to ensure proper authentication across different frontend origins
+- **Cookie Domain**: Domain attribute is omitted to allow browser-managed cookie scoping, which improves cross-origin authentication compatibility with `sameSite: 'none'`
 
 ### CORS Protection
 
@@ -227,9 +227,10 @@ This ensures every authenticated user has a complete profile for chat features.
 
 - In production, ensure both frontend and backend use HTTPS
 - Check that `NODE_ENV=production` is set
-- Verify the cookie domain is set correctly (should match backend URL)
-- For cross-origin setups, ensure `sameSite: 'none'` and `secure: true` are enabled
+- Verify cookie domain is not explicitly set (should be omitted for browser-managed scoping)
+- For cross-origin setups, ensure `sameSite: 'none'` and `secure: true` are enabled in production
 - Ensure cookies aren't being blocked by browser settings or third-party cookie restrictions
+- Check browser DevTools → Application → Cookies to verify cookie attributes are correct
 
 ### Session expires too quickly
 
@@ -246,9 +247,10 @@ Before deploying to production:
 - [ ] `NODE_ENV=production` is set
 - [ ] Both frontend and backend use HTTPS
 - [ ] `BETTER_AUTH_CLIENT_URL` points to production frontend
-- [ ] `BETTER_AUTH_URL` points to production backend (used for cookie domain)
+- [ ] `BETTER_AUTH_URL` points to production backend
 - [ ] `ALLOWED_ORIGINS` includes only necessary domains
-- [ ] Cookie domain is correctly configured (automatically set to backend URL)
+- [ ] Cookie configuration uses `sameSite: 'none'` and `secure: true` in production for cross-origin support
+- [ ] Cookie domain is not explicitly set (browser-managed for better compatibility)
 - [ ] Redis is configured and accessible
 - [ ] Session expiration is configured appropriately
 - [ ] Authentication flows tested in production environment

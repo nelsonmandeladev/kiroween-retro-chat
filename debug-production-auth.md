@@ -48,7 +48,7 @@ Access-Control-Allow-Origin: https://kiiroween-retrochat-frontend.vercel.app
 8. Verify cookie exists with:
    - Name: `better_auth.session_token`
    - Value: (some token)
-   - Domain: Set to backend URL (configured via `BETTER_AUTH_URL`)
+   - Domain: Browser-managed (not explicitly set)
    - Path: `/`
    - Secure: ✓
    - HttpOnly: ✓
@@ -98,7 +98,7 @@ If the cookie is NOT being sent, it's a browser security issue.
 **Fix:**
 
 1. Verify cookie has both `SameSite=None` AND `Secure=true`
-2. Check cookie domain is set to backend URL (automatically configured from `BETTER_AUTH_URL`)
+2. Check cookie domain is not explicitly set (browser-managed for better cross-origin compatibility)
 3. Test in different browser (Chrome, Firefox)
 4. Check browser settings allow third-party cookies
 

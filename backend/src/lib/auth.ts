@@ -57,14 +57,14 @@ export const auth = betterAuth({
   },
   advanced: {
     cookiePrefix: 'retrochat',
-    crossSubDomainCookies: {
-      enabled: true,
-    },
     useSecureCookies: isProduction,
     cookies: {
       session_token: {
         attributes: {
           sameSite: isProduction ? 'none' : 'lax',
+          secure: isProduction,
+          httpOnly: true,
+          path: '/',
         },
       },
     },

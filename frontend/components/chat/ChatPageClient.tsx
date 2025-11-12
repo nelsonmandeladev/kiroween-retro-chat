@@ -15,7 +15,8 @@ import { Button } from "@/components/retroui/Button";
 import { useState, useEffect } from "react";
 import { Users, UserPlus, Bell, LogOut } from "lucide-react";
 import { AnimatedGhostIcon } from "@/components/ui/AnimatedGhostIcon";
-import { useSession } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function ChatPageClient() {
     const { activeChat } = useChatStore();
@@ -31,6 +32,7 @@ export default function ChatPageClient() {
     const [showFriendRequests, setShowFriendRequests] = useState(false);
     const [showCreateGroup, setShowCreateGroup] = useState(false);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const router = useRouter();
 
     // Sync session to auth store
     useEffect(() => {
@@ -58,7 +60,14 @@ export default function ChatPageClient() {
     }, [fetchFriends, fetchFriendRequests, fetchUserGroups]);
 
     const handleLogout = async () => {
-        logout();
+        signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    logout();
+                    router.push("/login"); // redirect to login page
+                },
+            },
+        });
     };
 
     // Determine if we should show group members panel

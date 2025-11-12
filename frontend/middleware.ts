@@ -9,8 +9,6 @@ export async function middleware(request: NextRequest) {
         cookiePrefix: "retrochat",
     });
 
-    console.log({ session })
-
     if (!session) {
         return NextResponse.redirect(new URL("/login", request.url));
     }

@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookieCache } from "better-auth/cookies";
+import { getSessionCookie } from "better-auth/cookies";
 
 export async function middleware(request: NextRequest) {
     // Optimistically check for session cookie
     // Note: This only checks existence, not validity
     // Actual validation happens in each protected page
-    const session = await getCookieCache(request, {
-        cookiePrefix: "retrochat",
-    });
+    const sessionCookie = getSessionCookie(request);
 
-    if (!session) {
+    if (!sessionCookie) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
 

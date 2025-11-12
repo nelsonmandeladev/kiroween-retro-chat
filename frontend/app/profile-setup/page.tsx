@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth-server";
 import { ProfileSetup } from "@/components/auth/ProfileSetup";
+import { getSession } from "@/lib/auth-client";
 
 export default async function ProfileSetupPage() {
     const session = await getSession();

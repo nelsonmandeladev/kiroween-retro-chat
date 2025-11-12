@@ -4,11 +4,20 @@
 
 RetroChat uses Better-auth for secure session-based authentication with enhanced security features for production deployments.
 
+## Architecture
+
+The authentication system uses a **backend-first architecture**:
+
+1. **Backend (NestJS)**: Runs Better-auth server via `@thallesp/nestjs-better-auth` module
+2. **Frontend (Next.js)**: Uses Better-auth React client that communicates with the backend
+3. **API Proxy**: Next.js API route (`/api/auth/[...all]`) proxies requests to the backend
+
+This architecture allows the backend to handle all authentication logic, session management, and database operations while the frontend provides a seamless client experience.
+
 ## Security Features
 
 ### Cookie Security
 
-- **Custom Prefix**: All auth cookies use the `retrochat` prefix for namespace isolation
 - **HTTP-Only**: Cookies are HTTP-only to prevent XSS attacks
 - **Secure Flag**: Automatically enabled in production (requires HTTPS)
 - **Cross-Subdomain Support**: Enabled for flexible deployment architectures
@@ -36,18 +45,34 @@ ALLOWED_ORIGINS=https://staging.yourapp.com,https://preview.yourapp.com
 
 ## Configuration
 
-### Environment Variables
+### Backend Environment Variables
 
 ```bash
 # Required
 BETTER_AUTH_SECRET=<64-char-base64-string>
-BETTER_AUTH_URL=<backend-url>
-BETTER_AUTH_CLIENT_URL=<frontend-url>
+BETTER_AUTH_URL=<backend-url>              # e.g., https://api.yourapp.com
+BETTER_AUTH_CLIENT_URL=<frontend-url>      # e.g., https://yourapp.com
+DATABASE_URL=<postgresql-connection-string>
 
 # Optional
-ALLOWED_ORIGINS=<additional-origins>
+ALLOWED_ORIGINS=<additional-origins>       # Comma-separated list
 NODE_ENV=production
 ```
+
+### Frontend Environment Variables
+
+```bash
+# Required
+NEXT_PUBLIC_API_URL=<backend-url>          # e.g., https://api.yourapp.com
+BETTER_AUTH_SECRET=<same-as-backend>       # Must match backend secret
+BETTER_AUTH_URL=<frontend-url>             # e.g., https://yourapp.com
+DATABASE_URL=<same-as-backend>             # Better-auth client needs DB access
+
+# Optional
+NEXT_PUBLIC_WS_URL=<websocket-url>         # Usually same as NEXT_PUBLIC_API_URL
+```
+
+**Important**: The `BETTER_AUTH_SECRET` and `DATABASE_URL` must be identical in both frontend and backend for session validation to work.
 
 ### Generating Secrets
 
@@ -74,6 +99,79 @@ openssl rand -base64 64
 - CORS: **Strict** (only trusted origins)
 
 Set `NODE_ENV=production` to enable production security features.
+
+## Request Flow
+
+### Authentication Request Flow
+
+1. **User Action**: User submits login/signup form in frontend
+2. **Client Call**: Frontend calls `signIn.email()` or `signUp.email()` from Better-auth React client
+3. **API Proxy**: Request goes to Next.js API route `/api/auth/[...all]`
+4. **Backend Proxy**: Next.js route proxies the request to backend `/api/auth/*`
+5. **Better-auth Processing**: Backend Better-auth handles authentication
+6. **Session Creation**: Backend creates session and sets cookies
+7. **Response**: Cookies and session data returned through proxy chain
+8. **Client Update**: Frontend Better-auth client updates session state
+
+### Protected Route Access Flow
+
+1. **User Navigation**: User navigates to protected route (e.g., `/chat`)
+2. **Middleware Check**: Next.js middleware intercepts the request
+3. **Cookie Validation**: Middleware checks for `better_auth.session_token` cookie existence
+4. **Decision**:
+   - If cookie exists → Allow access to page
+   - If no cookie → Redirect to `/login`
+5. **Component Load**: Page component loads and uses `useSession()` hook
+6. **Session Sync**: Component syncs session data to Zustand auth store
+7. **Data Fetch**: Component fetches user-specific data (friends, groups, messages)
+
+### API Route Proxy
+
+The frontend uses a catch-all API route to proxy authentication requests:
+
+```typescript
+// frontend/app/api/auth/[...all]/route.ts
+export async function GET(request: NextRequest) {
+  const url = new URL(request.url);
+  const path = url.pathname.replace('/api/auth', '');
+  const backendUrl = `${API_URL}/api/auth${path}${url.search}`;
+
+  const response = await fetch(backendUrl, {
+    method: 'GET',
+    headers: request.headers,
+  });
+
+  return new NextResponse(response.body, {
+    status: response.status,
+    headers: response.headers,
+  });
+}
+```
+
+This ensures cookies are properly set and CORS is handled correctly.
+
+### Middleware Protection
+
+Protected routes are guarded by Next.js middleware:
+
+```typescript
+// frontend/middleware.ts
+export async function middleware(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
+
+  if (!sessionCookie) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/chat/:path*', '/profile-setup/:path*'],
+};
+```
+
+This provides a fast, edge-level authentication check before pages load. Note that middleware only checks cookie existence, not validity - actual session validation happens in components via `useSession()`.
 
 ## Automatic Profile Creation
 

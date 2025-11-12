@@ -280,12 +280,27 @@ See [KIRO_USAGE.md](./KIRO_USAGE.md) for detailed documentation on how we used K
 
 ### Authentication Issues
 
-- Clear browser cookies and local storage
-- Verify `BETTER_AUTH_SECRET` matches in both frontend and backend
-- Check Redis connection for session storage
-- Ensure `BETTER_AUTH_CLIENT_URL` is set to your frontend URL
-- Verify `ALLOWED_ORIGINS` includes all necessary domains
-- In production, ensure `NODE_ENV=production` for secure cookies
+RetroChat uses a **backend-first authentication architecture** where the backend runs Better-auth server and the frontend proxies requests through a Next.js API route. Authentication is enforced by Next.js middleware for protected routes.
+
+**Common Issues:**
+
+- **Cookies not set**: Verify `BETTER_AUTH_SECRET` and `DATABASE_URL` match exactly in both frontend and backend
+- **Session validation fails**: Clear browser cookies and local storage, then try logging in again
+- **CORS errors**: Ensure frontend URL is in `BETTER_AUTH_CLIENT_URL` or `ALLOWED_ORIGINS`
+- **Production issues**: Set `NODE_ENV=production` and ensure both frontend and backend use HTTPS
+- **Proxy errors**: Check that `NEXT_PUBLIC_API_URL` points to the correct backend URL
+- **Middleware redirects**: Middleware checks for session cookie existence on protected routes (`/chat`, `/profile-setup`)
+
+**Debug Steps:**
+
+1. Check backend logs for authentication errors
+2. Verify environment variables are set correctly in both frontend and backend
+3. Test backend auth endpoint directly: `curl -X POST https://api.yourapp.com/api/auth/sign-in/email`
+4. Check browser DevTools → Network tab for failed requests
+5. Verify cookies are being set with correct domain and security flags
+6. Check middleware is properly configured in `frontend/middleware.ts`
+
+See [Authentication Security](./backend/docs/authentication-security.md) for detailed troubleshooting.
 
 ## Documentation
 

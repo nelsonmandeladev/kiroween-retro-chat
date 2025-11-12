@@ -56,7 +56,6 @@ export const auth = betterAuth({
     },
   },
   advanced: {
-    cookiePrefix: 'retrochat',
     useSecureCookies: isProduction,
     cookies: {
       session_token: {

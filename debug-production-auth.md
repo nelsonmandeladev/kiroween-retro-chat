@@ -25,7 +25,7 @@ curl -X POST https://kiiroween-retrochat-backend-production.up.railway.app/api/a
 
 Look for in the response:
 
-- `Set-Cookie` header with `retrochat.session_token`
+- `Set-Cookie` header with `better_auth.session_token`
 - Cookie attributes: `SameSite=None; Secure; HttpOnly`
 - `Access-Control-Allow-Credentials: true`
 
@@ -39,14 +39,14 @@ Look for in the response:
 6. Check Response Headers:
 
 ```
-Set-Cookie: retrochat.session_token=...; Path=/; HttpOnly; Secure; SameSite=None
+Set-Cookie: better_auth.session_token=...; Path=/; HttpOnly; Secure; SameSite=None
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: https://kiiroween-retrochat-frontend.vercel.app
 ```
 
 7. Go to Application tab > Cookies > https://kiiroween-retrochat-backend-production.up.railway.app
 8. Verify cookie exists with:
-   - Name: `retrochat.session_token`
+   - Name: `better_auth.session_token`
    - Value: (some token)
    - Domain: `.up.railway.app` or `kiiroween-retrochat-backend-production.up.railway.app`
    - Path: `/`
@@ -62,7 +62,7 @@ Access-Control-Allow-Origin: https://kiiroween-retrochat-frontend.vercel.app
 4. Check Request Headers:
 
 ```
-Cookie: retrochat.session_token=...
+Cookie: better_auth.session_token=...
 ```
 
 If the cookie is NOT being sent, it's a browser security issue.

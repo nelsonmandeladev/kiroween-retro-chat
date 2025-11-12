@@ -36,8 +36,6 @@ export const profileService = {
             "/api/profile/picture",
             file
         );
-
-        console.log({ response })
         return response;
     },
 

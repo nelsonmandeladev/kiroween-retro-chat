@@ -498,32 +498,72 @@ const reader = response.body.getReader();
 
 ## Authentication
 
-Endpoints that require authentication use Better-auth session management. The user ID is extracted from the session and used to authorize operations.
+### Overview
 
-**Protected Endpoints**: All endpoints except `/api/auth/*` require authentication.
+RetroChat uses Better-auth for session-based authentication. The backend runs Better-auth server via NestJS, while the frontend uses Better-auth React client with a proxy architecture.
 
-### Authentication Configuration
+### Authentication Endpoints
 
-Better-auth is configured with the following security features:
+All authentication endpoints are handled by Better-auth at `/api/auth/*`:
 
-- **Session Management**: Cookie-based sessions with 5-minute cache
+- `POST /api/auth/sign-up/email` - Register new user
+- `POST /api/auth/sign-in/email` - Login with email/password
+- `POST /api/auth/sign-out` - Logout
+- `GET /api/auth/session` - Get current session
+
+**Note**: These endpoints are managed by Better-auth and don't appear in Swagger documentation.
+
+### Frontend Integration
+
+The frontend uses a Next.js API route (`/api/auth/[...all]`) that proxies all authentication requests to the backend. This ensures proper cookie handling and CORS configuration.
+
+```typescript
+// Frontend authentication
+import { signIn, signUp, signOut } from '@/lib/auth-client';
+
+// Login
+await signIn.email({ email, password });
+
+// Register
+await signUp.email({ email, password, name });
+
+// Logout
+await signOut();
+```
+
+### Protected Endpoints
+
+All API endpoints except `/api/auth/*` require authentication. The user ID is extracted from the session and used to authorize operations.
+
+### Session Management
+
+- **Cookie-based sessions** with 5-minute cache
 - **Cookie Security**:
   - Custom prefix: `retrochat`
-  - Cross-subdomain support enabled
-  - Secure cookies in production (HTTPS only)
-  - HTTP-only cookies to prevent XSS attacks
+  - HTTP-only to prevent XSS attacks
+  - Secure flag in production (HTTPS only)
+  - SameSite policy for CSRF protection
 - **CORS Protection**: Trusted origins configured via `BETTER_AUTH_CLIENT_URL` and `ALLOWED_ORIGINS`
 - **Automatic Profile Creation**: User profiles are created automatically on sign-up
 
 ### Environment Variables
 
-Required authentication environment variables:
+**Backend:**
 
 - `BETTER_AUTH_SECRET` - Secret key for session encryption (generate with `openssl rand -base64 64`)
-- `BETTER_AUTH_URL` - Backend URL (e.g., `http://localhost:3001` or `https://api.yourapp.com`)
+- `BETTER_AUTH_URL` - Backend URL (e.g., `https://api.yourapp.com`)
 - `BETTER_AUTH_CLIENT_URL` - Primary frontend URL for trusted origins
 - `ALLOWED_ORIGINS` - Additional comma-separated trusted origins for CORS
 - `NODE_ENV` - Set to `production` to enable secure cookies
+
+**Frontend:**
+
+- `BETTER_AUTH_SECRET` - Must match backend secret
+- `BETTER_AUTH_URL` - Frontend URL (e.g., `https://yourapp.com`)
+- `NEXT_PUBLIC_API_URL` - Backend API URL
+- `DATABASE_URL` - Must match backend (Better-auth client needs DB access)
+
+For detailed authentication configuration and security best practices, see [Authentication Security](./docs/authentication-security.md).
 
 ## Development
 

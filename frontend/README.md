@@ -28,12 +28,22 @@ A Next.js 16 application with React 19 that recreates the nostalgic MSN Messenge
 Copy `.env.example` to `.env` and configure:
 
 ```bash
+# Backend API URL
 NEXT_PUBLIC_API_URL=http://localhost:3001
+
+# WebSocket URL (usually same as API URL)
 NEXT_PUBLIC_WS_URL=http://localhost:3001
-BETTER_AUTH_SECRET=your-secret-key
+
+# Better-auth configuration (must match backend)
+BETTER_AUTH_SECRET=your-secret-key-must-match-backend
 BETTER_AUTH_URL=http://localhost:3000
-DATABASE_URL=postgresql://...
+DATABASE_URL=postgresql://...  # Same as backend
+
+# Optional
+NODE_ENV=development
 ```
+
+**Important**: The `BETTER_AUTH_SECRET` and `DATABASE_URL` must be identical to the backend configuration for authentication to work properly.
 
 ## Getting Started
 
@@ -72,6 +82,39 @@ frontend/
 │   └── websocket/         # WebSocket service
 └── public/
     └── sounds/            # Notification sound effects
+```
+
+## Authentication
+
+The frontend uses Better-auth React client with a proxy architecture and middleware-based protection:
+
+1. **Better-auth Client**: Configured in `lib/auth-client.ts` to communicate with backend
+2. **API Route Proxy**: `/api/auth/[...all]` proxies all auth requests to backend
+3. **Session Management**: Better-auth handles session cookies and validation
+4. **Middleware Protection**: `middleware.ts` checks for session cookie on protected routes (`/chat`, `/profile-setup`)
+5. **Client-Side Session**: Components use `useSession()` hook to access user data
+
+### Authentication Flow
+
+```typescript
+// User logs in
+await signIn.email({
+  email: "user@example.com",
+  password: "password",
+});
+
+// Request flows:
+// 1. Frontend → /api/auth/sign-in/email (Next.js API route)
+// 2. Next.js → Backend /api/auth/sign-in/email
+// 3. Backend processes auth and sets cookies
+// 4. Response with session data flows back
+
+// Protected route access:
+// 1. User navigates to /chat
+// 2. Middleware checks for session cookie
+// 3. If no cookie → redirect to /login
+// 4. If cookie exists → allow access
+// 5. Component uses useSession() to get user data
 ```
 
 ## Key Components

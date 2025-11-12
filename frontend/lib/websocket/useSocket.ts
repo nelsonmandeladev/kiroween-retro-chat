@@ -11,8 +11,6 @@ export function useSocket() {
     const { isAuthenticated, user } = useAuthStore();
     const { data: session } = useSession();
 
-    console.log({ session })
-
     useEffect(() => {
         if (isAuthenticated && user && session?.session?.token) {
             // Connect with user session token

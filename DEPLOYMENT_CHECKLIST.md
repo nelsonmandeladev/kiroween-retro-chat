@@ -64,7 +64,7 @@ Look for:
 
 **Application Tab > Cookies:**
 
-- Check if `retrochat.session_token` cookie exists
+- Check if `better_auth.session_token` cookie exists
 - Verify Domain is set correctly
 - Verify Secure flag is checked
 - Verify SameSite is "None"
@@ -163,7 +163,7 @@ git push
 
 ✅ Login sets a cookie with:
 
-- Name: `retrochat.session_token`
+- Name: `better_auth.session_token`
 - SameSite: `None`
 - Secure: `true`
 - HttpOnly: `true`

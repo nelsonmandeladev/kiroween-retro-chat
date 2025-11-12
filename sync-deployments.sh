@@ -44,22 +44,34 @@ echo ""
 
 # Sync backend
 echo -e "${BLUE}📦 Syncing backend...${NC}"
-if git subtree push --prefix=backend backend-deploy main; then
+BACKEND_COMMIT=$(git subtree split --prefix=backend main)
+if git push backend-deploy $BACKEND_COMMIT:main; then
     echo -e "${GREEN}✅ Backend synced successfully${NC}"
 else
-    echo -e "${RED}❌ Backend sync failed${NC}"
-    exit 1
+    echo -e "${YELLOW}⚠️  Normal push failed, trying force push...${NC}"
+    if git push backend-deploy $BACKEND_COMMIT:main --force; then
+        echo -e "${GREEN}✅ Backend force synced successfully${NC}"
+    else
+        echo -e "${RED}❌ Backend sync failed${NC}"
+        exit 1
+    fi
 fi
 
 echo ""
 
 # Sync frontend
 echo -e "${BLUE}📦 Syncing frontend...${NC}"
-if git subtree push --prefix=frontend frontend-deploy main; then
+FRONTEND_COMMIT=$(git subtree split --prefix=frontend main)
+if git push frontend-deploy $FRONTEND_COMMIT:main; then
     echo -e "${GREEN}✅ Frontend synced successfully${NC}"
 else
-    echo -e "${RED}❌ Frontend sync failed${NC}"
-    exit 1
+    echo -e "${YELLOW}⚠️  Normal push failed, trying force push...${NC}"
+    if git push frontend-deploy $FRONTEND_COMMIT:main --force; then
+        echo -e "${GREEN}✅ Frontend force synced successfully${NC}"
+    else
+        echo -e "${RED}❌ Frontend sync failed${NC}"
+        exit 1
+    fi
 fi
 
 echo ""

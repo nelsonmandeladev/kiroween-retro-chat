@@ -20,14 +20,15 @@ This architecture allows the backend to handle all authentication logic, session
 
 - **HTTP-Only**: Cookies are HTTP-only to prevent XSS attacks
 - **Secure Flag**: Automatically enabled in production (requires HTTPS)
-- **Cross-Subdomain Support**: Enabled for flexible deployment architectures
-- **SameSite Policy**: Configured for CSRF protection
+- **Domain Scoping**: Cookies are scoped to the backend domain for proper cross-origin authentication
+- **SameSite Policy**: Configured for CSRF protection (none in production, lax in development)
 
 ### Session Management
 
 - **Cookie Cache**: 5-minute cache for improved performance
 - **Session Validation**: All protected endpoints validate session on each request
 - **Automatic Expiration**: Sessions expire based on Better-auth configuration
+- **Cookie Domain**: Session cookies are scoped to the backend domain to ensure proper authentication across different frontend origins
 
 ### CORS Protection
 
@@ -226,8 +227,9 @@ This ensures every authenticated user has a complete profile for chat features.
 
 - In production, ensure both frontend and backend use HTTPS
 - Check that `NODE_ENV=production` is set
-- Verify cross-subdomain settings if using subdomains
-- Ensure cookies aren't being blocked by browser settings
+- Verify the cookie domain is set correctly (should match backend URL)
+- For cross-origin setups, ensure `sameSite: 'none'` and `secure: true` are enabled
+- Ensure cookies aren't being blocked by browser settings or third-party cookie restrictions
 
 ### Session expires too quickly
 
@@ -244,7 +246,9 @@ Before deploying to production:
 - [ ] `NODE_ENV=production` is set
 - [ ] Both frontend and backend use HTTPS
 - [ ] `BETTER_AUTH_CLIENT_URL` points to production frontend
+- [ ] `BETTER_AUTH_URL` points to production backend (used for cookie domain)
 - [ ] `ALLOWED_ORIGINS` includes only necessary domains
+- [ ] Cookie domain is correctly configured (automatically set to backend URL)
 - [ ] Redis is configured and accessible
 - [ ] Session expiration is configured appropriately
 - [ ] Authentication flows tested in production environment

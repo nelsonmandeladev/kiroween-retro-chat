@@ -64,6 +64,7 @@ export const auth = betterAuth({
           secure: isProduction,
           httpOnly: true,
           path: '/',
+          domain: currentConfig.baseURL,
         },
       },
     },

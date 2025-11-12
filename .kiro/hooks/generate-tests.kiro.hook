@@ -1,0 +1,14 @@
+{
+    "enabled": true,
+    "name": "Generate Component Tests",
+    "description": "Generates unit tests for React components",
+    "version": "1",
+    "when": {
+        "type": "manual",
+        "buttonLabel": "🧪 Generate Tests"
+    },
+    "then": {
+        "type": "askAgent",
+        "prompt": "Generate unit tests for the currently open React component. Create a test file in the same directory with the .test.tsx extension. Include tests for:\n\n1. Component renders without crashing\n2. Props are handled correctly\n3. User interactions work as expected\n4. Error states are displayed properly\n5. Loading states work correctly\n\nUse React Testing Library and follow testing best practices. Keep tests focused on user behavior, not implementation details."
+    }
+}

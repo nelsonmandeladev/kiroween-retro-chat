@@ -1,0 +1,418 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-head: var(--font-head);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius: var(--radius);
+  --shadow-xs: 1px 1px 0 0 var(--border);
+  --shadow-sm: 2px 2px 0 0 var(--border);
+  --shadow: 3px 3px 0 0 var(--border);
+  --shadow-md: 4px 4px 0 0 var(--border);
+  --shadow-lg: 6px 6px 0 0 var(--border);
+  --shadow-xl: 10px 10px 0 1px var(--border);
+  --shadow-2xl: 16px 16px 0 1px var(--border);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0;
+  /* MSN Messenger inspired colors */
+  --background: #ece9d8;
+  --foreground: #000;
+  --card: #fff;
+  --card-foreground: #000;
+  --primary: #0066cc;
+  --primary-hover: #0052a3;
+  --primary-foreground: #fff;
+  --secondary: #f0f0f0;
+  --secondary-foreground: #000;
+  --muted: #d4d0c8;
+  --muted-foreground: #5a5a5a;
+  --accent: #ffd700;
+  --accent-foreground: #000;
+  --destructive: #e63946;
+  --destructive-foreground: #fff;
+  --border: #8b8b8b;
+  --popover: #fff;
+  --popover-foreground: #000;
+  --input: #fff;
+  --ring: #0066cc;
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: #ece9d8;
+  --sidebar-foreground: #000;
+  --sidebar-primary: #0066cc;
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: #d4d0c8;
+  --sidebar-accent-foreground: #000;
+  --sidebar-border: #8b8b8b;
+  --sidebar-ring: #0066cc;
+  /* MSN Messenger specific colors */
+  --msn-blue: #0066cc;
+  --msn-blue-light: #4d94ff;
+  --msn-blue-dark: #0052a3;
+  --msn-green: #7fba00;
+  --msn-orange: #ff8c00;
+  --msn-window-bg: #ece9d8;
+  --msn-window-border: #0054e3;
+  --msn-button-bg: #d4d0c8;
+  --msn-button-hover: #e8e5d8;
+  --msn-input-bg: #fff;
+  --msn-input-border: #7f9db9;
+}
+
+.dark {
+  --radius: 0;
+  --background: #1a1a1a;
+  --foreground: #f5f5f5;
+  --card: #242424;
+  --card-foreground: #f5f5f5;
+  --primary: #ffdb33;
+  --primary-hover: #ffcc00;
+  --primary-foreground: #000;
+  --secondary: #3a3a3a;
+  --secondary-foreground: #f5f5f5;
+  --muted: #3f3f46;
+  --muted-foreground: #a0a0a0;
+  --accent: #fae583;
+  --accent-foreground: #000;
+  --destructive: #e63946;
+  --destructive-foreground: #fff;
+  --border: #3a3a3a;
+  --popover: #242424;
+  --popover-foreground: #f5f5f5;
+  --input: #3a3a3a;
+  --ring: #ffdb33;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: #242424;
+  --sidebar-foreground: #f5f5f5;
+  --sidebar-primary: #ffdb33;
+  --sidebar-primary-foreground: #000;
+  --sidebar-accent: #3a3a3a;
+  --sidebar-accent-foreground: #f5f5f5;
+  --sidebar-border: #3a3a3a;
+  --sidebar-ring: #ffdb33;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Tahoma", "Verdana", sans-serif;
+  }
+}
+
+@layer components {
+  /* MSN Messenger Window Styles */
+  .msn-window {
+    @apply bg-white border-2 border-(--msn-window-border) rounded-none shadow-[2px_2px_4px_rgba(0,0,0,0.3)];
+  }
+
+  .msn-window-header {
+    @apply bg-linear-to-r from-(--msn-blue) to-(--msn-blue-light) text-white px-3 py-2 border-b-2 border-(--msn-window-border);
+  }
+
+  .msn-window-body {
+    @apply bg-white p-3;
+  }
+
+  /* MSN Button Styles */
+  .msn-button {
+    @apply bg-(--msn-button-bg) border-2 border-[#003c74] text-black px-4 py-2 rounded-none;
+    @apply hover:bg-(--msn-button-hover);
+    box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #808080 inset;
+  }
+
+  .msn-button:active {
+    box-shadow: -1px -1px 0 #fff inset, 1px 1px 0 #808080 inset;
+  }
+
+  .msn-button-primary {
+    @apply bg-gradient-to-b from-(--msn-blue-light) to-(--msn-blue) border-2 border-[#003c74] text-white px-4 py-2 rounded-none;
+    @apply hover:from-(--msn-blue) hover:to-(--msn-blue-dark);
+    box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3) inset, -1px -1px 0 rgba(0, 0, 0, 0.3) inset;
+  }
+
+  /* MSN Input Styles */
+  .msn-input {
+    @apply bg-(--msn-input-bg) border-2 border-(--msn-input-border) rounded-none px-2 py-1;
+    @apply focus:border-(--msn-blue) focus:outline-none;
+    box-shadow: 1px 1px 0 #808080 inset, -1px -1px 0 #fff inset;
+  }
+
+  /* MSN Contact List Styles */
+  .msn-contact-item {
+    @apply bg-white border-b border-border px-3 py-2;
+    @apply hover:bg-[#e8f4ff] cursor-pointer transition-colors;
+  }
+
+  .msn-contact-item-selected {
+    @apply bg-[#cce8ff] border-l-4 border-l-(--msn-blue);
+  }
+
+  /* MSN Status Indicators */
+  .msn-status-online {
+    @apply w-3 h-3 rounded-full bg-(--msn-green) border-2 border-white shadow-sm;
+  }
+
+  .msn-status-away {
+    @apply w-3 h-3 rounded-full bg-(--msn-orange) border-2 border-white shadow-sm;
+  }
+
+  .msn-status-offline {
+    @apply w-3 h-3 rounded-full bg-gray-400 border-2 border-white shadow-sm;
+  }
+
+  /* MSN Message Bubble Styles */
+  .msn-message-sent {
+    @apply bg-[#d4e7ff] border border-[#99c2ff] rounded-lg px-3 py-2 text-sm;
+  }
+
+  .msn-message-received {
+    @apply bg-white border border-[#d4d0c8] rounded-lg px-3 py-2 text-sm;
+  }
+
+  .msn-message-ai {
+    @apply bg-linear-to-r from-purple-100 to-blue-100 border-2 border-purple-400 rounded-lg px-3 py-2 text-sm shadow-md;
+  }
+
+  /* MSN Scrollbar Styles */
+  .msn-scrollbar::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  .msn-scrollbar::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-left: 1px solid #d4d0c8;
+  }
+
+  .msn-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #d4d0c8, #e8e5d8);
+    border: 1px solid #8b8b8b;
+  }
+
+  .msn-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #c0bdb0, #d4d0c8);
+  }
+
+  /* MSN Divider */
+  .msn-divider {
+    @apply border-t-2 border-border my-2;
+    box-shadow: 0 1px 0 #fff;
+  }
+
+  /* MSN Badge */
+  .msn-badge {
+    @apply bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+
+  /* MSN Typing Indicator */
+  .msn-typing {
+    @apply text-xs text-gray-600 italic;
+  }
+
+  /* MSN Panel */
+  .msn-panel {
+    @apply bg-(--msn-window-bg) border-2 border-border p-3;
+    box-shadow: 1px 1px 0 #fff inset, -1px -1px 0 #808080 inset;
+  }
+}
+
+@layer utilities {
+  /* Smooth transitions for chat window */
+  .chat-window-enter {
+    animation: slideInFromRight 0.3s ease-out;
+  }
+
+  .chat-window-exit {
+    animation: slideOutToRight 0.3s ease-in;
+  }
+
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOutToRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+  /* Fade in animation for messages */
+  .message-fade-in {
+    animation: fadeIn 0.2s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Typing dots animation */
+  .typing-dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .typing-dots span {
+    width: 6px;
+    height: 6px;
+    background-color: currentColor;
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite ease-in-out both;
+  }
+
+  .typing-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .typing-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
+  @keyframes typingBounce {
+    0%,
+    80%,
+    100% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* AI streaming cursor animation */
+  .ai-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: currentColor;
+    animation: cursorBlink 1s infinite;
+  }
+
+  @keyframes cursorBlink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  /* Smooth scroll behavior */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+
+  /* Contact list item hover animation */
+  .msn-contact-item {
+    transition: all 0.2s ease-in-out;
+  }
+
+  .msn-contact-item:hover {
+    transform: translateX(2px);
+  }
+
+  /* Message bubble entrance animation */
+  .message-bubble-enter {
+    animation: messageBubbleIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  @keyframes messageBubbleIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* Skeleton pulse animation (enhanced) */
+  @keyframes skeletonPulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .skeleton-pulse {
+    animation: skeletonPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}

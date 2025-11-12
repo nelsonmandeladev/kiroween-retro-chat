@@ -1,0 +1,14 @@
+{
+    "enabled": true,
+    "name": "Check Retro Styling",
+    "description": "Verifies component uses proper MSN Messenger retro styling",
+    "version": "1",
+    "when": {
+        "type": "manual",
+        "buttonLabel": "🎨 Check Retro Style"
+    },
+    "then": {
+        "type": "askAgent",
+        "prompt": "Review the currently open component and verify it follows the retro MSN Messenger styling guidelines from retro-ui-guidelines.md:\n\n1. Are the correct color codes used? (#ECE9D8, #0066CC, etc.)\n2. Are status indicators styled correctly?\n3. Does it match the MSN Messenger aesthetic?\n4. Are buttons and inputs using the retro style?\n5. Are animations subtle and appropriate?\n\nProvide specific suggestions to improve the retro feel if needed."
+    }
+}

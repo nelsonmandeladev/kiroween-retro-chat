@@ -1,0 +1,14 @@
+{
+    "enabled": true,
+    "name": "AI Code Review",
+    "description": "Performs comprehensive code review on saved files",
+    "version": "1",
+    "when": {
+        "type": "manual",
+        "buttonLabel": "👀 AI Review"
+    },
+    "then": {
+        "type": "askAgent",
+        "prompt": "Perform a comprehensive code review of the currently open file. Check for:\n\n**Code Quality:**\n- TypeScript types are properly defined\n- No unused variables or imports\n- Functions are focused and single-purpose\n- Code is readable and well-organized\n\n**Best Practices:**\n- Follows React best practices\n- Proper error handling\n- Performance considerations (memo, useMemo, useCallback where needed)\n- Accessibility (ARIA labels, keyboard navigation)\n\n**Project Standards:**\n- Follows patterns from react-patterns.md\n- Uses retro styling from retro-ui-guidelines.md\n- Error handling matches error-handling-standards.md\n\n**Security:**\n- No XSS vulnerabilities\n- Input validation present\n- No sensitive data exposed\n\nProvide specific, actionable feedback with code examples where helpful."
+    }
+}

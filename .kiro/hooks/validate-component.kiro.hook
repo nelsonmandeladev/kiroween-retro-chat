@@ -1,0 +1,16 @@
+{
+    "enabled": false,
+    "name": "Validate React Component",
+    "description": "Validates React component follows project patterns when saved",
+    "version": "1",
+    "when": {
+        "type": "fileEdited",
+        "patterns": [
+            "frontend/components/**/*.tsx"
+        ]
+    },
+    "then": {
+        "type": "askAgent",
+        "prompt": "Review the saved component file and check:\n1. Does it follow the component template from react-patterns.md?\n2. Does it use proper TypeScript types for props?\n3. Does it follow the retro UI guidelines for styling?\n4. Does it handle errors properly?\n5. Are there any obvious bugs or issues?\n\nIf there are issues, suggest fixes. If it looks good, just say 'Component looks good ✓'"
+    }
+}

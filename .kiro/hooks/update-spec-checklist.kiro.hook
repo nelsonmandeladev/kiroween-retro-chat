@@ -1,0 +1,14 @@
+{
+    "enabled": true,
+    "name": "Update Spec Checklist",
+    "description": "Updates task checklist when components are created or modified",
+    "version": "1",
+    "when": {
+        "type": "manual",
+        "buttonLabel": "✓ Update Spec Tasks"
+    },
+    "then": {
+        "type": "askAgent",
+        "prompt": "Look at the recently modified files in the frontend/ directory and check which tasks in .kiro/specs/frontend-tasks.md should be marked as complete. Update the checklist by changing [ ] to [x] for completed tasks. Only mark tasks as complete if the implementation is actually done based on the task requirements."
+    }
+}

@@ -502,6 +502,29 @@ Endpoints that require authentication use Better-auth session management. The us
 
 **Protected Endpoints**: All endpoints except `/api/auth/*` require authentication.
 
+### Authentication Configuration
+
+Better-auth is configured with the following security features:
+
+- **Session Management**: Cookie-based sessions with 5-minute cache
+- **Cookie Security**:
+  - Custom prefix: `retrochat`
+  - Cross-subdomain support enabled
+  - Secure cookies in production (HTTPS only)
+  - HTTP-only cookies to prevent XSS attacks
+- **CORS Protection**: Trusted origins configured via `BETTER_AUTH_CLIENT_URL` and `ALLOWED_ORIGINS`
+- **Automatic Profile Creation**: User profiles are created automatically on sign-up
+
+### Environment Variables
+
+Required authentication environment variables:
+
+- `BETTER_AUTH_SECRET` - Secret key for session encryption (generate with `openssl rand -base64 64`)
+- `BETTER_AUTH_URL` - Backend URL (e.g., `http://localhost:3001` or `https://api.yourapp.com`)
+- `BETTER_AUTH_CLIENT_URL` - Primary frontend URL for trusted origins
+- `ALLOWED_ORIGINS` - Additional comma-separated trusted origins for CORS
+- `NODE_ENV` - Set to `production` to enable secure cookies
+
 ## Development
 
 To start the development server with API documentation:

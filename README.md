@@ -283,6 +283,9 @@ See [KIRO_USAGE.md](./KIRO_USAGE.md) for detailed documentation on how we used K
 - Clear browser cookies and local storage
 - Verify `BETTER_AUTH_SECRET` matches in both frontend and backend
 - Check Redis connection for session storage
+- Ensure `BETTER_AUTH_CLIENT_URL` is set to your frontend URL
+- Verify `ALLOWED_ORIGINS` includes all necessary domains
+- In production, ensure `NODE_ENV=production` for secure cookies
 
 ## Documentation
 
@@ -292,6 +295,7 @@ See [KIRO_USAGE.md](./KIRO_USAGE.md) for detailed documentation on how we used K
 - **[Backend README](./backend/README.md)** - Backend setup and architecture
 - **[Frontend README](./frontend/README.md)** - Frontend setup and architecture
 - **[API Documentation](./backend/API_DOCUMENTATION.md)** - Complete API reference
+- **[Authentication Security](./backend/docs/authentication-security.md)** - Auth configuration and security best practices
 - **[AI Friend Streaming](./backend/docs/ai-friend-streaming.md)** - WebSocket streaming implementation
 
 ## Contributing

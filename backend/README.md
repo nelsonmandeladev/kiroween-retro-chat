@@ -66,6 +66,7 @@ REDIS_URL=redis://...
 # Better Auth
 BETTER_AUTH_SECRET=your-secret-key
 BETTER_AUTH_URL=http://localhost:3001
+BETTER_AUTH_CLIENT_URL=http://localhost:3000
 
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=your-cloud-name
@@ -76,7 +77,7 @@ CLOUDINARY_API_SECRET=your-api-secret
 OPENAI_API_KEY=sk-...
 
 # CORS
-FRONTEND_URL=http://localhost:3000
+ALLOWED_ORIGINS=http://localhost:3000
 ```
 
 ## Project setup
@@ -149,9 +150,12 @@ The backend is deployed from a separate `retrochat-backend` repository that's sy
 - `DATABASE_URL` - Neon PostgreSQL connection string
 - `REDIS_URL` - Upstash Redis connection string
 - `BETTER_AUTH_SECRET` - Authentication secret key
+- `BETTER_AUTH_URL` - Backend URL (e.g., https://api.yourapp.com)
+- `BETTER_AUTH_CLIENT_URL` - Frontend URL for trusted origins
 - `CLOUDINARY_*` - Cloudinary credentials
 - `OPENAI_API_KEY` - OpenAI API key
-- `FRONTEND_URL` - Frontend URL for CORS
+- `ALLOWED_ORIGINS` - Comma-separated list of allowed CORS origins
+- `NODE_ENV` - Environment (development/production)
 
 ## Resources
 

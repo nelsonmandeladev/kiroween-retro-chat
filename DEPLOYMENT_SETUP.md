@@ -115,6 +115,22 @@ Connect the `retrochat-backend` repo to your platform:
 - Build command: `npm install && npm run build`
 - Start command: `npm run start:prod`
 
+**Required Environment Variables:**
+
+- `DATABASE_URL` - Neon PostgreSQL connection string
+- `UPSTASH_REDIS_REST_URL` - Upstash Redis URL
+- `UPSTASH_REDIS_REST_TOKEN` - Upstash Redis token
+- `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 64`
+- `BETTER_AUTH_URL` - Your backend URL (e.g., `https://api.yourapp.com`)
+- `BETTER_AUTH_CLIENT_URL` - Your frontend URL (e.g., `https://yourapp.vercel.app`)
+- `CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
+- `CLOUDINARY_API_KEY` - Cloudinary API key
+- `CLOUDINARY_API_SECRET` - Cloudinary API secret
+- `OPENAI_API_KEY` - OpenAI API key
+- `ALLOWED_ORIGINS` - Comma-separated additional origins (optional)
+- `NODE_ENV` - Set to `production`
+- `PORT` - Usually auto-set by platform (default: 3001)
+
 ### Frontend (Vercel)
 
 Connect the `retrochat-frontend` repo to Vercel:
@@ -123,6 +139,14 @@ Connect the `retrochat-frontend` repo to Vercel:
 - Root directory: `/`
 - Build command: `npm run build`
 - Output directory: `.next`
+
+**Required Environment Variables:**
+
+- `BETTER_AUTH_SECRET` - Same secret as backend
+- `BETTER_AUTH_URL` - Your frontend URL (e.g., `https://yourapp.vercel.app`)
+- `NEXT_PUBLIC_API_URL` - Your backend URL (e.g., `https://api.yourapp.com`)
+- `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
+- `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` - Cloudinary upload preset
 
 ## Troubleshooting
 

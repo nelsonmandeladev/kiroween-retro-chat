@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
     // Note: This only checks existence, not validity
     // Actual validation happens in each protected page
     const sessionCookie = getSessionCookie(request);
-
+    console.log({ sessionCookie })
     if (!sessionCookie) {
         return NextResponse.redirect(new URL("/login", request.url));
     }

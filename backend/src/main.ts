@@ -7,11 +7,16 @@ async function bootstrap() {
     bodyParser: false,
   });
 
-  // Enable CORS for development
+  // Environment-based CORS configuration
+  const isProduction = process.env.NODE_ENV === 'production';
+  const allowedOrigins = isProduction
+    ? process.env.ALLOWED_ORIGINS?.split(',') || [
+        'https://kiiroween-retrochat-frontend.vercel.app',
+      ]
+    : ['http://localhost:3000'];
+
   app.enableCors({
-    origin: process.env.ALLOWED_ORIGINS?.split(',') || [
-      'http://localhost:3000',
-    ],
+    origin: allowedOrigins,
     credentials: true,
   });
 
@@ -36,4 +41,5 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3000);
 }
-bootstrap();
+
+void bootstrap();

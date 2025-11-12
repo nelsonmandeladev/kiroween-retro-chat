@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function RegisterPage() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-blue-50 to-indigo-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
                 <h1 className="text-3xl font-bold text-center mb-2">Join RetroChat</h1>
                 <p className="text-gray-600 text-center mb-6">

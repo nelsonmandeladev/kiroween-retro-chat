@@ -47,7 +47,7 @@ export class GroupsController {
     private readonly groupAIProfileService: GroupAIProfileService,
     @Inject(forwardRef(() => EventsGateway))
     private readonly eventsGateway: EventsGateway,
-  ) { }
+  ) {}
 
   @Post()
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
@@ -248,7 +248,11 @@ export class GroupsController {
     await this.groupsService.deleteGroup(groupId, userId);
 
     // Notify all members about group deletion
-    await this.eventsGateway.emitGroupDeleted(groupId, group.name, group.members);
+    await this.eventsGateway.emitGroupDeleted(
+      groupId,
+      group.name,
+      group.members,
+    );
 
     return { message: 'Group deleted successfully' };
   }

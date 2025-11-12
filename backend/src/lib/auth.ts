@@ -12,6 +12,32 @@ import {
 } from '@nestjs/common';
 import type { Request } from 'express';
 
+// Environment-based configuration
+const isProduction = process.env.NODE_ENV === 'production';
+
+const config = {
+  development: {
+    baseURL: 'http://localhost:3001',
+    clientURL: 'http://localhost:3000',
+    allowedOrigins: ['http://localhost:3000'],
+  },
+  production: {
+    baseURL:
+      process.env.BETTER_AUTH_URL ||
+      'https://kiiroween-retrochat-backend-production.up.railway.app',
+    clientURL:
+      process.env.BETTER_AUTH_CLIENT_URL ||
+      'https://kiiroween-retrochat-frontend.vercel.app',
+    allowedOrigins: [
+      process.env.BETTER_AUTH_CLIENT_URL ||
+        'https://kiiroween-retrochat-frontend.vercel.app',
+      ...(process.env.ALLOWED_ORIGINS?.split(',') || []),
+    ],
+  },
+};
+
+const currentConfig = isProduction ? config.production : config.development;
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -20,12 +46,9 @@ export const auth = betterAuth({
     enabled: true,
   },
   secret: process.env.BETTER_AUTH_SECRET!,
-  baseURL: process.env.BETTER_AUTH_URL!,
+  baseURL: currentConfig.baseURL,
   basePath: '/api/auth',
-  trustedOrigins: [
-    process.env.BETTER_AUTH_CLIENT_URL!,
-    ...(process.env.ALLOWED_ORIGINS?.split(',') || []),
-  ],
+  trustedOrigins: currentConfig.allowedOrigins,
   session: {
     cookieCache: {
       enabled: true,
@@ -37,7 +60,14 @@ export const auth = betterAuth({
     crossSubDomainCookies: {
       enabled: true,
     },
-    useSecureCookies: process.env.NODE_ENV === 'production',
+    useSecureCookies: isProduction,
+    cookies: {
+      session_token: {
+        attributes: {
+          sameSite: isProduction ? 'none' : 'lax',
+        },
+      },
+    },
   },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {

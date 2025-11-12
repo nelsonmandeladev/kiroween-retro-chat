@@ -21,6 +21,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
         }
 
         if (!session) {
+            setLoading(false);
             router.push("/login");
             return;
         }
@@ -31,14 +32,15 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
             email: session.user.email,
             image: session.user.image || undefined,
         });
+        setLoading(false);
     }, [session, isPending, router, setUser, setLoading]);
 
     if (isPending) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center bg-[#ECE9D8]">
                 <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading...</p>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0066CC] mx-auto"></div>
+                    <p className="mt-4 text-[#000080]">Loading...</p>
                 </div>
             </div>
         );

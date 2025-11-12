@@ -24,6 +24,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@better-fetch/fetch": "^1.1.18",
     "@neondatabase/serverless": "^1.0.2",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
@@ -37,13 +38,13 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "cloudinary": "^2.8.0",
+    "dotenv": "^17.2.2",
     "drizzle-orm": "^0.44.7",
     "multer": "^2.0.2",
     "openai": "^6.8.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "socket.io": "^4.8.1",
-    "dotenv": "^17.2.2"
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

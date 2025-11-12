@@ -46,7 +46,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private readonly groupMessageService: GroupMessageService,
     private readonly groupAIService: GroupAIService,
     private readonly groupAIProfileService: GroupAIProfileService,
-  ) { }
+  ) {}
 
   async handleConnection(client: Socket<any, any, any, SocketData>) {
     this.logger.log(`Client attempting connection: ${client.id}`);

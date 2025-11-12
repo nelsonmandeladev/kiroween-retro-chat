@@ -26,7 +26,7 @@ const UPDATE_INTERVAL = 20; // Update profile every 20 messages
 export class GroupAIProfileService {
   constructor(
     private readonly groupAIStyleAnalysisService: GroupAIStyleAnalysisService,
-  ) { }
+  ) {}
 
   /**
    * Update group style profile after analyzing messages

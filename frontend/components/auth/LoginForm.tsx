@@ -30,18 +30,21 @@ export function LoginForm() {
 
     const onSubmit = async (data: LoginFormData) => {
         try {
-            const result = await signIn.email({
+            await signIn.email({
                 email: data.email,
                 password: data.password,
+                rememberMe: true,
+                fetchOptions: {
+                    onSuccess: () => {
+                        router.push("/chat");
+                    },
+                    onError: (ctx) => {
+                        setError("root", {
+                            message: ctx.error.message || "Login failed",
+                        });
+                    },
+                },
             });
-
-            if (result.error) {
-                setError("root", {
-                    message: result.error.message || "Login failed",
-                });
-            } else {
-                router.push("/chat");
-            }
         } catch {
             setError("root", {
                 message: "An unexpected error occurred",

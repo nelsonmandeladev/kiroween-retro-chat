@@ -1,6 +1,14 @@
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth-server";
 import { ProfileSetup } from "@/components/auth/ProfileSetup";
 
-export default function ProfileSetupPage() {
+export default async function ProfileSetupPage() {
+    const session = await getSession();
+
+    if (!session) {
+        redirect("/login");
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">

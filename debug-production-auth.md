@@ -8,8 +8,8 @@ SSH into Railway or check the dashboard to confirm:
 
 ```bash
 echo $NODE_ENV  # Should be: production
-echo $BETTER_AUTH_URL  # REQUIRED: https://api.appacheur.com (or your backend subdomain)
-echo $BETTER_AUTH_CLIENT_URL  # REQUIRED: https://app.appacheur.com (or your frontend subdomain)
+echo $BETTER_AUTH_URL  # REQUIRED: https://kiroween-backend.appacheur.com
+echo $BETTER_AUTH_CLIENT_URL  # REQUIRED: https://kiroween-retrochat.appacheur.com
 echo $ALLOWED_ORIGINS  # Optional: Additional origins (comma-separated)
 ```
 
@@ -22,9 +22,9 @@ echo $ALLOWED_ORIGINS  # Optional: Additional origins (comma-separated)
 ### 2. Test Backend Auth Endpoint
 
 ```bash
-curl -X POST https://api.appacheur.com/api/auth/sign-in/email \
+curl -X POST https://kiroween-backend.appacheur.com/api/auth/sign-in/email \
   -H "Content-Type: application/json" \
-  -H "Origin: https://app.appacheur.com" \
+  -H "Origin: https://kiroween-retrochat.appacheur.com" \
   -d '{"email":"test@example.com","password":"testpassword"}' \
   -v
 ```
@@ -37,7 +37,7 @@ Look for in the response:
 
 ### 3. Browser DevTools Check (Production Site)
 
-1. Go to: `https://app.appacheur.com/login` (or your frontend subdomain)
+1. Go to: `https://kiroween-retrochat.appacheur.com/login`
 2. Open DevTools (F12)
 3. Go to Network tab
 4. Try to log in
@@ -47,10 +47,10 @@ Look for in the response:
 ```
 Set-Cookie: better_auth.session_token=...; Domain=.appacheur.com; Path=/; HttpOnly; Secure; SameSite=None
 Access-Control-Allow-Credentials: true
-Access-Control-Allow-Origin: https://app.appacheur.com
+Access-Control-Allow-Origin: https://kiroween-retrochat.appacheur.com
 ```
 
-7. Go to Application tab > Cookies > https://api.appacheur.com (or your backend subdomain)
+7. Go to Application tab > Cookies > https://kiroween-backend.appacheur.com
 8. Verify cookie exists with:
    - Name: `better_auth.session_token`
    - Value: (some token)
@@ -90,8 +90,8 @@ If the cookie is NOT being sent, it's a browser security issue.
 **Fix:**
 
 1. Set `NODE_ENV=production` on Railway
-2. Set `BETTER_AUTH_URL` to your backend subdomain (e.g., `https://api.appacheur.com`)
-3. Set `BETTER_AUTH_CLIENT_URL` to your frontend subdomain (e.g., `https://app.appacheur.com`)
+2. Set `BETTER_AUTH_URL=https://kiroween-backend.appacheur.com`
+3. Set `BETTER_AUTH_CLIENT_URL=https://kiroween-retrochat.appacheur.com`
 4. Verify both URLs use `https://` and are subdomains of `appacheur.com`
 5. Check CORS allows credentials
 

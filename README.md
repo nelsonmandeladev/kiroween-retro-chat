@@ -285,7 +285,7 @@ See [KIRO_USAGE.md](./KIRO_USAGE.md) for detailed documentation on how we used K
 
 RetroChat uses a **backend-first authentication architecture** where the backend runs Better-auth server and the frontend proxies requests through a Next.js API route. Authentication is enforced by Next.js middleware for protected routes.
 
-**Important**: Production authentication requires both frontend and backend to be deployed on subdomains of `appacheur.com` (e.g., `app.appacheur.com` and `api.appacheur.com`) for cross-subdomain cookie sharing.
+**Important**: Production authentication requires both frontend and backend to be deployed on subdomains of `appacheur.com` (e.g., `kiroween-retrochat.appacheur.com` and `kiroween-backend.appacheur.com`) for cross-subdomain cookie sharing.
 
 **Common Issues:**
 

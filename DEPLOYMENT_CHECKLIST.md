@@ -7,10 +7,10 @@
 ```bash
 NODE_ENV=production
 BETTER_AUTH_SECRET=1j3HKqpkP6Xs6iehs/NHGOmlAjXxse4amj+xjtAauL0VpU3YuLP4/MF6OU+nkTDDHxJdP9XVBR7nZTXMyLmH/Q==
-BETTER_AUTH_URL=https://kiiroween-retrochat-backend-production.up.railway.app
-BETTER_AUTH_CLIENT_URL=https://kiiroween-retrochat-frontend.vercel.app
-ALLOWED_ORIGINS=https://kiiroween-retrochat-frontend.vercel.app
-FRONTEND_URL=https://kiiroween-retrochat-frontend.vercel.app
+BETTER_AUTH_URL=https://kiroween-backend.appacheur.com
+BETTER_AUTH_CLIENT_URL=https://kiroween-retrochat.appacheur.com
+ALLOWED_ORIGINS=https://kiroween-retrochat.appacheur.com
+FRONTEND_URL=https://kiroween-retrochat.appacheur.com
 DATABASE_URL=<your-neon-db-url>
 UPSTASH_REDIS_REST_URL=<your-upstash-url>
 UPSTASH_REDIS_REST_TOKEN=<your-upstash-token>
@@ -37,9 +37,9 @@ PORT=3001
 
 ```bash
 BETTER_AUTH_SECRET=1j3HKqpkP6Xs6iehs/NHGOmlAjXxse4amj+xjtAauL0VpU3YuLP4/MF6OU+nkTDDHxJdP9XVBR7nZTXMyLmH/Q==
-BETTER_AUTH_URL=https://kiiroween-retrochat-frontend.vercel.app
-NEXT_PUBLIC_API_URL=https://kiiroween-retrochat-backend-production.up.railway.app
-NEXT_PUBLIC_WS_URL=https://kiiroween-retrochat-backend-production.up.railway.app
+BETTER_AUTH_URL=https://kiroween-retrochat.appacheur.com
+NEXT_PUBLIC_API_URL=https://kiroween-backend.appacheur.com
+NEXT_PUBLIC_WS_URL=https://kiroween-backend.appacheur.com
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dwpsoxipp
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=<your-upload-preset>
 ```
@@ -81,7 +81,7 @@ Look for:
 
 - ✅ Verify `NODE_ENV=production` is set on Railway
 - ✅ Verify `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` are set (required in production)
-- ✅ Verify both URLs are subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`)
+- ✅ Verify both URLs are subdomains of `appacheur.com` (e.g., `kiroween-backend.appacheur.com` and `kiroween-retrochat.appacheur.com`)
 - ✅ Verify both URLs use HTTPS (not HTTP)
 - ✅ Check CORS headers include `Access-Control-Allow-Credentials: true`
 
@@ -185,7 +185,7 @@ git push
 - Secure: `true`
 - HttpOnly: `true`
 
-✅ Cookie is sent with subsequent requests from `app.appacheur.com` to `api.appacheur.com`
+✅ Cookie is sent with subsequent requests from `kiroween-retrochat.appacheur.com` to `kiroween-backend.appacheur.com`
 
 ✅ Session is validated and user can access `/chat`
 

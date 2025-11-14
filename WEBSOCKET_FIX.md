@@ -14,7 +14,7 @@ WebSocket connections were failing in production with "io server disconnect" err
 Add this environment variable to your Railway deployment:
 
 ```
-FRONTEND_URL=https://kiiroween-retrochat-frontend.vercel.app
+FRONTEND_URL=https://kiroween-retrochat.appacheur.com
 ```
 
 **Steps:**
@@ -22,7 +22,7 @@ FRONTEND_URL=https://kiiroween-retrochat-frontend.vercel.app
 1. Go to Railway dashboard
 2. Select your backend project
 3. Go to Variables tab
-4. Add new variable: `FRONTEND_URL` = `https://kiiroween-retrochat-frontend.vercel.app`
+4. Add new variable: `FRONTEND_URL` = `https://kiroween-retrochat.appacheur.com`
 5. Redeploy the backend
 
 ### Frontend (Vercel)
@@ -30,7 +30,7 @@ FRONTEND_URL=https://kiiroween-retrochat-frontend.vercel.app
 Add this environment variable to your Vercel deployment:
 
 ```
-NEXT_PUBLIC_WS_URL=https://kiiroween-retrochat-backend-production.up.railway.app
+NEXT_PUBLIC_WS_URL=https://kiroween-backend.appacheur.com
 ```
 
 **Steps:**
@@ -38,7 +38,7 @@ NEXT_PUBLIC_WS_URL=https://kiiroween-retrochat-backend-production.up.railway.app
 1. Go to Vercel dashboard
 2. Select your frontend project
 3. Go to Settings → Environment Variables
-4. Add new variable: `NEXT_PUBLIC_WS_URL` = `https://kiiroween-retrochat-backend-production.up.railway.app`
+4. Add new variable: `NEXT_PUBLIC_WS_URL` = `https://kiroween-backend.appacheur.com`
 5. Redeploy the frontend
 
 ## Why This Fixes It

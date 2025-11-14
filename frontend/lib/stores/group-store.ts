@@ -203,6 +203,11 @@ export const useGroupStore = create<GroupState>((set, get) => ({
         try {
             const groups = await groupsService.getGroups();
             get().setGroups(groups);
+
+            // Fetch members for all groups to display member counts
+            await Promise.all(
+                groups.map(group => get().fetchGroupMembers(group.id))
+            );
         } catch (error) {
             console.error("Failed to fetch user groups:", error);
             handleGroupError(error, () => get().fetchUserGroups());

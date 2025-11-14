@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { useChatStore, ConversationInfo } from "@/lib/stores/chat-store";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { useGroupStore } from "@/lib/stores/group-store";
+import { useContactStore } from "@/lib/stores/contact-store";
 import { Message, GroupMessage } from "@/lib/api/types";
 import { Avatar } from "@/components/retroui/Avatar";
 import { Button } from "@/components/retroui/Button";
@@ -157,9 +158,19 @@ export function ChatWindow({ conversation, onClose }: ChatWindowProps) {
                     setHasMoreMessages(messages.length === 50);
                 }
 
-                // Mark messages as read
+                // Mark messages as read and reset unread counts in all stores
                 markMessagesAsRead(conversation.id);
                 resetUnreadCount(conversation.id);
+
+                // Reset unread count in contact store for direct messages
+                if (!isGroupChat && !isAIFriend) {
+                    useContactStore.getState().resetUnreadCount(conversation.id);
+                }
+
+                // Reset unread count in group store for group messages
+                if (isGroupChat) {
+                    useGroupStore.getState().resetUnreadCount(conversation.id);
+                }
             } catch (error) {
                 console.error("Failed to load message history:", error);
             } finally {

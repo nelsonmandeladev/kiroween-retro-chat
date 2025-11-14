@@ -199,23 +199,54 @@ Get the Group AI's style profile.
 
 ### WebSocket Events
 
-The WebSocket server (`/`) handles real-time events:
+The WebSocket server (`/`) handles real-time events with automatic authentication via session cookies.
+
+**Configuration:**
+
+- **CORS**: Configured via `FRONTEND_URL` environment variable
+- **Authentication**: Validates session cookies on connection
+- **Transport**: WebSocket with polling fallback
+- **Reconnection**: Automatic with exponential backoff
 
 **Client → Server:**
 
-- `join` - Join user's personal room
-- `typing` - Notify typing status
-- `stop-typing` - Stop typing notification
+- `message:send` - Send a 1-on-1 message
+- `user:typing` - Notify typing status to a friend
+- `user:check-status` - Check online status of multiple users
+- `ai-friend:message` - Send message to AI Friend (streaming response)
+- `group:message:send` - Send a group message
+- `group:typing` - Notify typing status in a group
+- `group:ai:mention` - Mention Group AI (streaming response)
 
 **Server → Client:**
 
-- `message` - New 1-on-1 message received
-- `group-message` - New group message received
-- `friend-request` - New friend request received
-- `friend-request-accepted` - Friend request was accepted
-- `typing` - Friend is typing
-- `stop-typing` - Friend stopped typing
-- `user-status-change` - Friend's online status changed
+- `user:status` - User online/offline status change
+- `user:status-batch` - Batch status updates for multiple users
+- `friend:request` - New friend request received
+- `friend:accepted` - Friend request was accepted
+- `message:receive` - New 1-on-1 message received
+- `message:sent` - Confirmation of sent message
+- `user:typing` - Friend is typing
+- `group:message:receive` - New group message received
+- `group:message:sent` - Confirmation of sent group message
+- `group:typing` - User is typing in group
+- `group:member:added` - Member added to group
+- `group:member:removed` - Member removed from group
+- `group:deleted` - Group was deleted
+- `ai-friend:stream-start` - AI Friend response streaming started
+- `ai-friend:stream-chunk` - AI Friend response chunk
+- `ai-friend:stream-end` - AI Friend response complete
+- `ai-friend:error` - AI Friend error
+- `group:ai:stream-start` - Group AI response streaming started
+- `group:ai:stream-chunk` - Group AI response chunk
+- `group:ai:stream-end` - Group AI response complete
+- `group:ai:error` - Group AI error
+
+**Environment Variables:**
+
+- `FRONTEND_URL` - Required for WebSocket CORS configuration (must match frontend URL)
+
+For WebSocket troubleshooting, see [WEBSOCKET_FIX.md](../WEBSOCKET_FIX.md).
 
 ## Data Transfer Objects (DTOs)
 
@@ -561,6 +592,7 @@ All API endpoints except `/api/auth/*` require authentication. The user ID is ex
 - `BETTER_AUTH_SECRET` - Must match backend secret
 - `BETTER_AUTH_URL` - Frontend URL (e.g., `https://yourapp.com`)
 - `NEXT_PUBLIC_API_URL` - Backend API URL
+- `NEXT_PUBLIC_WS_URL` - Backend WebSocket URL (usually same as API URL)
 - `DATABASE_URL` - Must match backend (Better-auth client needs DB access)
 
 For detailed authentication configuration and security best practices, see [Authentication Security](./docs/authentication-security.md).

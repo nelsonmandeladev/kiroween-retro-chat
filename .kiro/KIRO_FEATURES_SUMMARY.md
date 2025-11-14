@@ -248,7 +248,7 @@ The combination of these features allowed us to build a complex, polished applic
 - Comprehensive error handling
 - Production-ready code quality
 
-All in approximately 3 weeks of development time.
+All in approximately 1 week of development time.
 
 ---
 

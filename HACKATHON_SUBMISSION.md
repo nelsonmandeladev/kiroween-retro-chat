@@ -209,7 +209,7 @@ See [DEPLOYMENT_SETUP.md](./DEPLOYMENT_SETUP.md) for detailed deployment instruc
 #### Title Options:
 
 1. "Resurrecting MSN Messenger with AI: A Kiroween Hackathon Journey"
-2. "How I Built a Nostalgic Chat App in 3 Weeks Using Kiro"
+2. "How I Built a Nostalgic Chat App in 1 Week Using Kiro"
 3. "Spec-Driven Development: Building RetroChat with AI Assistance"
 4. "From Idea to App: Using Kiro to Build MSN Messenger 2.0"
 

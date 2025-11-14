@@ -65,8 +65,8 @@ REDIS_URL=redis://...
 
 # Better Auth
 BETTER_AUTH_SECRET=your-secret-key
-BETTER_AUTH_URL=http://localhost:3001
-BETTER_AUTH_CLIENT_URL=http://localhost:3000
+BETTER_AUTH_URL=http://localhost:3001  # Production: https://api.appacheur.com
+BETTER_AUTH_CLIENT_URL=http://localhost:3000  # Production: https://app.appacheur.com
 
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=your-cloud-name
@@ -150,12 +150,14 @@ The backend is deployed from a separate `retrochat-backend` repository that's sy
 - `DATABASE_URL` - Neon PostgreSQL connection string
 - `REDIS_URL` - Upstash Redis connection string
 - `BETTER_AUTH_SECRET` - Authentication secret key
-- `BETTER_AUTH_URL` - Backend URL (e.g., https://api.yourapp.com)
-- `BETTER_AUTH_CLIENT_URL` - Frontend URL for trusted origins
+- `BETTER_AUTH_URL` - Backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
+- `BETTER_AUTH_CLIENT_URL` - Frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
 - `CLOUDINARY_*` - Cloudinary credentials
 - `OPENAI_API_KEY` - OpenAI API key
 - `ALLOWED_ORIGINS` - Comma-separated list of allowed CORS origins
 - `NODE_ENV` - Environment (development/production)
+
+**Important**: For production cross-subdomain authentication, both `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` must be subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`).
 
 ## Resources
 

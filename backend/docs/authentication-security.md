@@ -20,7 +20,8 @@ This architecture allows the backend to handle all authentication logic, session
 
 - **HTTP-Only**: Cookies are HTTP-only to prevent XSS attacks
 - **Secure Flag**: Automatically enabled in production (requires HTTPS)
-- **Domain Handling**: Domain attribute is not explicitly set, allowing the browser to handle it automatically for better cross-origin compatibility
+- **Cross-Subdomain Support**: In production, cookies are configured to work across subdomains of `.appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`)
+- **Domain Handling**: Production uses explicit domain `.appacheur.com` for subdomain sharing; development omits domain for localhost compatibility
 - **SameSite Policy**: Configured for CSRF protection (`none` in production with `secure: true`, `lax` in development)
 
 ### Session Management
@@ -28,7 +29,7 @@ This architecture allows the backend to handle all authentication logic, session
 - **Cookie Cache**: 5-minute cache for improved performance
 - **Session Validation**: All protected endpoints validate session on each request
 - **Automatic Expiration**: Sessions expire based on Better-auth configuration
-- **Cookie Domain**: Domain attribute is omitted to allow browser-managed cookie scoping, which improves cross-origin authentication compatibility with `sameSite: 'none'`
+- **Cross-Subdomain Cookies**: Production enables `crossSubDomainCookies` with domain `.appacheur.com` to allow authentication across subdomains
 
 ### CORS Protection
 
@@ -49,16 +50,18 @@ ALLOWED_ORIGINS=https://staging.yourapp.com,https://preview.yourapp.com
 ### Backend Environment Variables
 
 ```bash
-# Required
+# Required - All must be set in production
 BETTER_AUTH_SECRET=<64-char-base64-string>
 BETTER_AUTH_URL=<backend-url>              # e.g., https://api.yourapp.com
 BETTER_AUTH_CLIENT_URL=<frontend-url>      # e.g., https://yourapp.com
 DATABASE_URL=<postgresql-connection-string>
+NODE_ENV=production                        # Must be 'production' for secure cookies
 
 # Optional
-ALLOWED_ORIGINS=<additional-origins>       # Comma-separated list
-NODE_ENV=production
+ALLOWED_ORIGINS=<additional-origins>       # Comma-separated list of additional trusted origins
 ```
+
+**Important**: In production, `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` are required and have no fallback values. The application will fail to start if these are not set.
 
 ### Frontend Environment Variables
 
@@ -227,10 +230,11 @@ This ensures every authenticated user has a complete profile for chat features.
 
 - In production, ensure both frontend and backend use HTTPS
 - Check that `NODE_ENV=production` is set
-- Verify cookie domain is not explicitly set (should be omitted for browser-managed scoping)
-- For cross-origin setups, ensure `sameSite: 'none'` and `secure: true` are enabled in production
+- Verify cookie domain is set to `.appacheur.com` in production for cross-subdomain support
+- For cross-subdomain setups, ensure `sameSite: 'none'` and `secure: true` are enabled in production
 - Ensure cookies aren't being blocked by browser settings or third-party cookie restrictions
 - Check browser DevTools → Application → Cookies to verify cookie attributes are correct
+- Verify both frontend and backend are on subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`)
 
 ### Session expires too quickly
 
@@ -244,13 +248,14 @@ Before deploying to production:
 
 - [ ] `BETTER_AUTH_SECRET` is a strong, unique 64+ character string
 - [ ] Same secret is used in both frontend and backend
-- [ ] `NODE_ENV=production` is set
+- [ ] `NODE_ENV=production` is set (required for secure cookies)
+- [ ] `BETTER_AUTH_URL` is set to production backend URL (required, no fallback)
+- [ ] `BETTER_AUTH_CLIENT_URL` is set to production frontend URL (required, no fallback)
 - [ ] Both frontend and backend use HTTPS
-- [ ] `BETTER_AUTH_CLIENT_URL` points to production frontend
-- [ ] `BETTER_AUTH_URL` points to production backend
-- [ ] `ALLOWED_ORIGINS` includes only necessary domains
-- [ ] Cookie configuration uses `sameSite: 'none'` and `secure: true` in production for cross-origin support
-- [ ] Cookie domain is not explicitly set (browser-managed for better compatibility)
+- [ ] `ALLOWED_ORIGINS` includes only necessary additional domains (optional)
+- [ ] Cookie configuration uses `sameSite: 'none'` and `secure: true` in production for cross-subdomain support
+- [ ] Cookie domain is set to `.appacheur.com` in production for subdomain sharing
+- [ ] Frontend and backend are deployed on subdomains of `appacheur.com`
 - [ ] Redis is configured and accessible
 - [ ] Session expiration is configured appropriately
 - [ ] Authentication flows tested in production environment

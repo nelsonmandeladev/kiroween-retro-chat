@@ -8,17 +8,23 @@ SSH into Railway or check the dashboard to confirm:
 
 ```bash
 echo $NODE_ENV  # Should be: production
-echo $BETTER_AUTH_URL  # Should be: https://kiiroween-retrochat-backend-production.up.railway.app
-echo $BETTER_AUTH_CLIENT_URL  # Should be: https://kiiroween-retrochat-frontend.vercel.app
-echo $ALLOWED_ORIGINS  # Should include: https://kiiroween-retrochat-frontend.vercel.app
+echo $BETTER_AUTH_URL  # REQUIRED: https://api.appacheur.com (or your backend subdomain)
+echo $BETTER_AUTH_CLIENT_URL  # REQUIRED: https://app.appacheur.com (or your frontend subdomain)
+echo $ALLOWED_ORIGINS  # Optional: Additional origins (comma-separated)
 ```
+
+**Critical**:
+
+- `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` are required in production with no fallback values
+- Both URLs must be subdomains of `appacheur.com` for cross-subdomain authentication to work
+- If either is missing or not on the correct domain, authentication will fail
 
 ### 2. Test Backend Auth Endpoint
 
 ```bash
-curl -X POST https://kiiroween-retrochat-backend-production.up.railway.app/api/auth/sign-in/email \
+curl -X POST https://api.appacheur.com/api/auth/sign-in/email \
   -H "Content-Type: application/json" \
-  -H "Origin: https://kiiroween-retrochat-frontend.vercel.app" \
+  -H "Origin: https://app.appacheur.com" \
   -d '{"email":"test@example.com","password":"testpassword"}' \
   -v
 ```
@@ -26,12 +32,12 @@ curl -X POST https://kiiroween-retrochat-backend-production.up.railway.app/api/a
 Look for in the response:
 
 - `Set-Cookie` header with `better_auth.session_token`
-- Cookie attributes: `SameSite=None; Secure; HttpOnly`
+- Cookie attributes: `Domain=.appacheur.com; SameSite=None; Secure; HttpOnly`
 - `Access-Control-Allow-Credentials: true`
 
 ### 3. Browser DevTools Check (Production Site)
 
-1. Go to: https://kiiroween-retrochat-frontend.vercel.app/login
+1. Go to: `https://app.appacheur.com/login` (or your frontend subdomain)
 2. Open DevTools (F12)
 3. Go to Network tab
 4. Try to log in
@@ -39,16 +45,16 @@ Look for in the response:
 6. Check Response Headers:
 
 ```
-Set-Cookie: better_auth.session_token=...; Path=/; HttpOnly; Secure; SameSite=None
+Set-Cookie: better_auth.session_token=...; Domain=.appacheur.com; Path=/; HttpOnly; Secure; SameSite=None
 Access-Control-Allow-Credentials: true
-Access-Control-Allow-Origin: https://kiiroween-retrochat-frontend.vercel.app
+Access-Control-Allow-Origin: https://app.appacheur.com
 ```
 
-7. Go to Application tab > Cookies > https://kiiroween-retrochat-backend-production.up.railway.app
+7. Go to Application tab > Cookies > https://api.appacheur.com (or your backend subdomain)
 8. Verify cookie exists with:
    - Name: `better_auth.session_token`
    - Value: (some token)
-   - Domain: Browser-managed (not explicitly set)
+   - Domain: `.appacheur.com` (with leading dot for subdomain sharing)
    - Path: `/`
    - Secure: ✓
    - HttpOnly: ✓
@@ -76,14 +82,18 @@ If the cookie is NOT being sent, it's a browser security issue.
 **Causes:**
 
 - `NODE_ENV` not set to `production` on Railway
+- `BETTER_AUTH_URL` or `BETTER_AUTH_CLIENT_URL` not set (required in production)
 - Backend not using HTTPS
 - CORS not configured properly
+- Frontend and backend not on subdomains of `appacheur.com`
 
 **Fix:**
 
 1. Set `NODE_ENV=production` on Railway
-2. Verify Railway URL uses `https://`
-3. Check CORS allows credentials
+2. Set `BETTER_AUTH_URL` to your backend subdomain (e.g., `https://api.appacheur.com`)
+3. Set `BETTER_AUTH_CLIENT_URL` to your frontend subdomain (e.g., `https://app.appacheur.com`)
+4. Verify both URLs use `https://` and are subdomains of `appacheur.com`
+5. Check CORS allows credentials
 
 ### Issue 2: Cookie Set But Not Sent
 
@@ -92,15 +102,17 @@ If the cookie is NOT being sent, it's a browser security issue.
 **Causes:**
 
 - `SameSite=None` requires `Secure=true`
-- Domain mismatch
+- Domain mismatch (frontend and backend not on same domain)
 - Browser blocking third-party cookies
+- Cookie domain not configured for subdomains
 
 **Fix:**
 
 1. Verify cookie has both `SameSite=None` AND `Secure=true`
-2. Check cookie domain is not explicitly set (browser-managed for better cross-origin compatibility)
-3. Test in different browser (Chrome, Firefox)
-4. Check browser settings allow third-party cookies
+2. Check cookie domain is set to `.appacheur.com` (with leading dot)
+3. Verify both frontend and backend are on `*.appacheur.com` subdomains
+4. Test in different browser (Chrome, Firefox)
+5. Check browser settings allow third-party cookies
 
 ### Issue 3: Session Returns Null
 

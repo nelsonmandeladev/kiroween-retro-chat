@@ -22,15 +22,10 @@ const config = {
     allowedOrigins: ['http://localhost:3000'],
   },
   production: {
-    baseURL:
-      process.env.BETTER_AUTH_URL ||
-      'https://kiiroween-retrochat-backend-production.up.railway.app',
-    clientURL:
-      process.env.BETTER_AUTH_CLIENT_URL ||
-      'https://kiiroween-retrochat-frontend.vercel.app',
+    baseURL: process.env.BETTER_AUTH_URL,
+    clientURL: process.env.BETTER_AUTH_CLIENT_URL,
     allowedOrigins: [
-      process.env.BETTER_AUTH_CLIENT_URL ||
-      'https://kiiroween-retrochat-frontend.vercel.app',
+      process.env.BETTER_AUTH_CLIENT_URL!,
       ...(process.env.ALLOWED_ORIGINS?.split(',') || []),
     ],
   },
@@ -57,18 +52,25 @@ export const auth = betterAuth({
   },
   advanced: {
     useSecureCookies: isProduction,
-    cookies: {
-      session_token: {
-        attributes: {
-          sameSite: isProduction ? 'none' : 'lax',
-          secure: isProduction,
-          httpOnly: true,
-          path: '/',
-          // Don't set domain - let the browser handle it
-          // This allows cross-origin cookies with sameSite: 'none'
-        },
+    // Enable cross-subdomain cookies for production
+    ...(isProduction && {
+      crossSubDomainCookies: {
+        enabled: true,
+        domain: '.appacheur.com', // Leading dot allows sharing across subdomains
       },
-    },
+    }),
+    // Environment-specific cookie attributes
+    defaultCookieAttributes: isProduction
+      ? {
+          sameSite: 'none', // Required for cross-subdomain cookies
+          secure: true, // Required for SameSite=None (HTTPS only)
+          path: '/',
+        }
+      : {
+          sameSite: 'lax', // More flexible for localhost development
+          secure: false, // HTTP cookies (localhost)
+          path: '/',
+        },
   },
   hooks: {
     after: createAuthMiddleware(async (ctx) => {

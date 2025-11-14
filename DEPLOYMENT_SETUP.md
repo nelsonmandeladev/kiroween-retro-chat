@@ -121,8 +121,8 @@ Connect the `retrochat-backend` repo to your platform:
 - `UPSTASH_REDIS_REST_URL` - Upstash Redis URL
 - `UPSTASH_REDIS_REST_TOKEN` - Upstash Redis token
 - `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 64`
-- `BETTER_AUTH_URL` - Your backend URL (e.g., `https://api.yourapp.com`)
-- `BETTER_AUTH_CLIENT_URL` - Your frontend URL (e.g., `https://yourapp.vercel.app`)
+- `BETTER_AUTH_URL` - Your backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
+- `BETTER_AUTH_CLIENT_URL` - Your frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
 - `CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
 - `CLOUDINARY_API_KEY` - Cloudinary API key
 - `CLOUDINARY_API_SECRET` - Cloudinary API secret
@@ -130,6 +130,8 @@ Connect the `retrochat-backend` repo to your platform:
 - `ALLOWED_ORIGINS` - Comma-separated additional origins (optional)
 - `NODE_ENV` - Set to `production`
 - `PORT` - Usually auto-set by platform (default: 3001)
+
+**Important**: For production cross-subdomain authentication, both backend and frontend must be deployed on subdomains of `appacheur.com`. Using different domains (e.g., `vercel.app` and `railway.app`) will not work with the current configuration.
 
 ### Frontend (Vercel)
 
@@ -143,10 +145,12 @@ Connect the `retrochat-frontend` repo to Vercel:
 **Required Environment Variables:**
 
 - `BETTER_AUTH_SECRET` - Same secret as backend
-- `BETTER_AUTH_URL` - Your frontend URL (e.g., `https://yourapp.vercel.app`)
-- `NEXT_PUBLIC_API_URL` - Your backend URL (e.g., `https://api.yourapp.com`)
+- `BETTER_AUTH_URL` - Your frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
+- `NEXT_PUBLIC_API_URL` - Your backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
 - `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` - Cloudinary upload preset
+
+**Important**: Both URLs must be subdomains of `appacheur.com` for authentication to work in production.
 
 ## Troubleshooting
 

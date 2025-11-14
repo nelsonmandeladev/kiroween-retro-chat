@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Auto-Format Backend",
+  "description": "Automatically runs 'npm run format' in the backend directory when TypeScript files are saved to ensure consistent code formatting.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "backend/src/**/*.ts"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A TypeScript file in the backend has been modified. Run 'npm run format' in the backend directory to ensure consistent code formatting across the codebase."
+  }
+}

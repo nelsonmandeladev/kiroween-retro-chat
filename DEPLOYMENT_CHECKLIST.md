@@ -23,9 +23,11 @@ PORT=3001
 ### Critical Settings:
 
 - ✅ `NODE_ENV=production` - MUST be set for proper cookie configuration
-- ✅ `BETTER_AUTH_URL` - Must match your Railway domain
-- ✅ `BETTER_AUTH_CLIENT_URL` - Must match your Vercel domain
-- ✅ `ALLOWED_ORIGINS` - Must include your Vercel domain
+- ✅ `BETTER_AUTH_URL` - REQUIRED in production, must be a subdomain of `appacheur.com` (e.g., `https://api.appacheur.com`)
+- ✅ `BETTER_AUTH_CLIENT_URL` - REQUIRED in production, must be a subdomain of `appacheur.com` (e.g., `https://app.appacheur.com`)
+- ✅ `ALLOWED_ORIGINS` - Optional, for additional trusted origins beyond the client URL
+
+**Important**: For cross-subdomain authentication to work, both frontend and backend must be deployed on subdomains of the same domain (`appacheur.com`). Using different domains (e.g., `vercel.app` and `railway.app`) will not work with the current configuration.
 
 ## Frontend (Vercel)
 
@@ -74,13 +76,16 @@ Look for:
 **Issue: Cookie not being set**
 
 - ✅ Verify `NODE_ENV=production` is set on Railway
-- ✅ Verify Railway URL uses HTTPS (not HTTP)
+- ✅ Verify `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` are set (required in production)
+- ✅ Verify both URLs are subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`)
+- ✅ Verify both URLs use HTTPS (not HTTP)
 - ✅ Check CORS headers include `Access-Control-Allow-Credentials: true`
 
 **Issue: Cookie set but not sent with requests**
 
 - ✅ Verify frontend is using `credentials: 'include'` in fetch
-- ✅ Check cookie domain is not explicitly set (browser-managed)
+- ✅ Check cookie domain is set to `.appacheur.com` (with leading dot)
+- ✅ Verify both frontend and backend are on `*.appacheur.com` subdomains
 - ✅ Verify `SameSite=None` and `Secure=true`
 
 **Issue: Session returns null**
@@ -164,12 +169,15 @@ git push
 ✅ Login sets a cookie with:
 
 - Name: `better_auth.session_token`
+- Domain: `.appacheur.com` (with leading dot)
 - SameSite: `None`
 - Secure: `true`
 - HttpOnly: `true`
 
-✅ Cookie is sent with subsequent requests
+✅ Cookie is sent with subsequent requests from `app.appacheur.com` to `api.appacheur.com`
 
 ✅ Session is validated and user can access `/chat`
 
 ✅ Middleware redirects unauthenticated users to `/login`
+
+✅ Both frontend and backend are deployed on subdomains of `appacheur.com`

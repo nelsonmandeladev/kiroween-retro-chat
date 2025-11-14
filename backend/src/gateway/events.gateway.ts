@@ -54,7 +54,12 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     try {
       // Validate session with Better-auth using cookies from handshake
       const session = await auth.api.getSession({
-        headers: client.handshake.headers as any,
+        headers: new Headers(
+          Object.entries(client.handshake.headers).map(([key, value]) => [
+            key,
+            Array.isArray(value) ? value.join(', ') : String(value),
+          ]),
+        ),
       });
 
       if (!session || !session.user) {

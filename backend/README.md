@@ -61,12 +61,16 @@ Copy `.env.example` to `.env` and configure:
 DATABASE_URL=postgresql://...
 
 # Redis
-REDIS_URL=redis://...
+UPSTASH_REDIS_REST_URL=https://...
+UPSTASH_REDIS_REST_TOKEN=...
 
 # Better Auth
 BETTER_AUTH_SECRET=your-secret-key
 BETTER_AUTH_URL=http://localhost:3001  # Production: https://api.appacheur.com
 BETTER_AUTH_CLIENT_URL=http://localhost:3000  # Production: https://app.appacheur.com
+
+# WebSocket CORS
+FRONTEND_URL=http://localhost:3000  # Production: https://app.appacheur.com
 
 # Cloudinary
 CLOUDINARY_CLOUD_NAME=your-cloud-name
@@ -148,13 +152,15 @@ The backend is deployed from a separate `retrochat-backend` repository that's sy
 **Required Environment Variables:**
 
 - `DATABASE_URL` - Neon PostgreSQL connection string
-- `REDIS_URL` - Upstash Redis connection string
+- `UPSTASH_REDIS_REST_URL` - Upstash Redis REST URL
+- `UPSTASH_REDIS_REST_TOKEN` - Upstash Redis REST token
 - `BETTER_AUTH_SECRET` - Authentication secret key
 - `BETTER_AUTH_URL` - Backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
 - `BETTER_AUTH_CLIENT_URL` - Frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
+- `FRONTEND_URL` - Frontend URL for WebSocket CORS (must match `BETTER_AUTH_CLIENT_URL`)
 - `CLOUDINARY_*` - Cloudinary credentials
 - `OPENAI_API_KEY` - OpenAI API key
-- `ALLOWED_ORIGINS` - Comma-separated list of allowed CORS origins
+- `ALLOWED_ORIGINS` - Comma-separated list of allowed CORS origins (optional)
 - `NODE_ENV` - Environment (development/production)
 
 **Important**: For production cross-subdomain authentication, both `BETTER_AUTH_URL` and `BETTER_AUTH_CLIENT_URL` must be subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`).

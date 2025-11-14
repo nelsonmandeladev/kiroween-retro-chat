@@ -258,7 +258,10 @@ See [KIRO_USAGE.md](./KIRO_USAGE.md) for detailed documentation on how we used K
 
 - Ensure backend is running on the correct port (3001)
 - Check CORS settings in backend `.env`
-- Verify `FRONTEND_URL` matches your frontend URL
+- Verify `FRONTEND_URL` is set on backend (matches your frontend URL)
+- Verify `NEXT_PUBLIC_WS_URL` is set on frontend (points to backend URL)
+- Check browser console for "io server disconnect" errors
+- See [WEBSOCKET_FIX.md](./WEBSOCKET_FIX.md) for detailed troubleshooting
 
 ### Database Connection Errors
 

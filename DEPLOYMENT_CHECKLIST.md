@@ -10,6 +10,7 @@ BETTER_AUTH_SECRET=1j3HKqpkP6Xs6iehs/NHGOmlAjXxse4amj+xjtAauL0VpU3YuLP4/MF6OU+nk
 BETTER_AUTH_URL=https://kiiroween-retrochat-backend-production.up.railway.app
 BETTER_AUTH_CLIENT_URL=https://kiiroween-retrochat-frontend.vercel.app
 ALLOWED_ORIGINS=https://kiiroween-retrochat-frontend.vercel.app
+FRONTEND_URL=https://kiiroween-retrochat-frontend.vercel.app
 DATABASE_URL=<your-neon-db-url>
 UPSTASH_REDIS_REST_URL=<your-upstash-url>
 UPSTASH_REDIS_REST_TOKEN=<your-upstash-token>
@@ -25,6 +26,7 @@ PORT=3001
 - ✅ `NODE_ENV=production` - MUST be set for proper cookie configuration
 - ✅ `BETTER_AUTH_URL` - REQUIRED in production, must be a subdomain of `appacheur.com` (e.g., `https://api.appacheur.com`)
 - ✅ `BETTER_AUTH_CLIENT_URL` - REQUIRED in production, must be a subdomain of `appacheur.com` (e.g., `https://app.appacheur.com`)
+- ✅ `FRONTEND_URL` - REQUIRED for WebSocket CORS, must match your frontend URL
 - ✅ `ALLOWED_ORIGINS` - Optional, for additional trusted origins beyond the client URL
 
 **Important**: For cross-subdomain authentication to work, both frontend and backend must be deployed on subdomains of the same domain (`appacheur.com`). Using different domains (e.g., `vercel.app` and `railway.app`) will not work with the current configuration.
@@ -37,6 +39,7 @@ PORT=3001
 BETTER_AUTH_SECRET=1j3HKqpkP6Xs6iehs/NHGOmlAjXxse4amj+xjtAauL0VpU3YuLP4/MF6OU+nkTDDHxJdP9XVBR7nZTXMyLmH/Q==
 BETTER_AUTH_URL=https://kiiroween-retrochat-frontend.vercel.app
 NEXT_PUBLIC_API_URL=https://kiiroween-retrochat-backend-production.up.railway.app
+NEXT_PUBLIC_WS_URL=https://kiiroween-retrochat-backend-production.up.railway.app
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=dwpsoxipp
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=<your-upload-preset>
 ```
@@ -44,6 +47,7 @@ NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=<your-upload-preset>
 ### Critical Settings:
 
 - ✅ `NEXT_PUBLIC_API_URL` - Must point to your Railway backend
+- ✅ `NEXT_PUBLIC_WS_URL` - Must point to your Railway backend (usually same as API URL)
 - ✅ `BETTER_AUTH_SECRET` - Must match backend secret exactly
 
 ## Troubleshooting Production Session Issues
@@ -80,6 +84,13 @@ Look for:
 - ✅ Verify both URLs are subdomains of `appacheur.com` (e.g., `api.appacheur.com` and `app.appacheur.com`)
 - ✅ Verify both URLs use HTTPS (not HTTP)
 - ✅ Check CORS headers include `Access-Control-Allow-Credentials: true`
+
+**Issue: WebSocket connection fails**
+
+- ✅ Verify `FRONTEND_URL` is set on Railway backend
+- ✅ Verify `NEXT_PUBLIC_WS_URL` is set on Vercel frontend
+- ✅ Check browser console for WebSocket connection errors
+- ✅ Verify both URLs use HTTPS in production
 
 **Issue: Cookie set but not sent with requests**
 

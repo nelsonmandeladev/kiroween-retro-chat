@@ -123,6 +123,7 @@ Connect the `retrochat-backend` repo to your platform:
 - `BETTER_AUTH_SECRET` - Generate with `openssl rand -base64 64`
 - `BETTER_AUTH_URL` - Your backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
 - `BETTER_AUTH_CLIENT_URL` - Your frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
+- `FRONTEND_URL` - Your frontend URL for WebSocket CORS (must match `BETTER_AUTH_CLIENT_URL`)
 - `CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
 - `CLOUDINARY_API_KEY` - Cloudinary API key
 - `CLOUDINARY_API_SECRET` - Cloudinary API secret
@@ -147,6 +148,7 @@ Connect the `retrochat-frontend` repo to Vercel:
 - `BETTER_AUTH_SECRET` - Same secret as backend
 - `BETTER_AUTH_URL` - Your frontend URL (must be subdomain of `appacheur.com`, e.g., `https://app.appacheur.com`)
 - `NEXT_PUBLIC_API_URL` - Your backend URL (must be subdomain of `appacheur.com`, e.g., `https://api.appacheur.com`)
+- `NEXT_PUBLIC_WS_URL` - Your backend WebSocket URL (usually same as `NEXT_PUBLIC_API_URL`)
 - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` - Cloudinary cloud name
 - `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` - Cloudinary upload preset
 

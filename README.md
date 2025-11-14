@@ -105,13 +105,14 @@ npm run db:studio
 
 ### Testing the Application
 
-1. Register a new account at `/register`
-2. Complete profile setup at `/profile-setup`
-3. Search for users and send friend requests
-4. Start chatting with friends in real-time
-5. Send 50+ messages to activate AI Friend learning
-6. Create a group chat with multiple friends
-7. Mention the Group AI with `@GroupAI` in group chats
+1. Visit the landing page at `/` to see the retro MSN Messenger-inspired welcome experience
+2. Register a new account at `/register`
+3. Complete profile setup at `/profile-setup`
+4. Search for users and send friend requests
+5. Start chatting with friends in real-time
+6. Send 50+ messages to activate AI Friend learning
+7. Create a group chat with multiple friends
+8. Mention the Group AI with `@GroupAI` in group chats
 
 ## Deployment
 
@@ -162,6 +163,11 @@ See [DEPLOYMENT_SETUP.md](./DEPLOYMENT_SETUP.md) for complete setup instructions
 
 ### Core Features
 
+- **Landing Page**: Nostalgic MSN Messenger-inspired welcome experience with:
+  - Animated retro window design
+  - Feature showcase with demo chat
+  - Interactive UI elements (window controls, status indicators)
+  - Smooth fade-in animations
 - User authentication and profile management
 - Real-time 1-on-1 messaging with friends
 - Friend request system with accept/reject

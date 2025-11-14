@@ -4,6 +4,12 @@ A Next.js 16 application with React 19 that recreates the nostalgic MSN Messenge
 
 ## Features
 
+- **Landing Page**: Nostalgic MSN Messenger-inspired welcome experience
+  - Animated retro windows with fade-in effects
+  - Feature showcase grid (Real-Time Chat, AI Friend, Group Chats)
+  - Interactive demo chat window
+  - Status indicators and typing animations
+  - Responsive design with gradient background
 - **Retro UI**: Authentic MSN Messenger aesthetic with Tailwind CSS
 - **Real-time Chat**: WebSocket-powered messaging with typing indicators
 - **AI Integration**: Personal AI Friend and Group AI features
@@ -66,6 +72,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ```
 frontend/
 ├── app/                    # Next.js App Router pages
+│   ├── page.tsx           # Landing page with retro MSN design
 │   ├── chat/              # Main chat interface
 │   ├── login/             # Login page
 │   ├── register/          # Registration page
@@ -118,6 +125,17 @@ await signIn.email({
 ```
 
 ## Key Components
+
+### Pages
+
+- **Landing Page** (`app/page.tsx`): Retro MSN Messenger-inspired welcome page with:
+  - Hero section with animated window
+  - Feature showcase grid
+  - Demo chat window with typing indicators
+  - Call-to-action buttons
+  - Responsive design with gradient background
+
+### Chat Components
 
 - **ChatWindow**: Main chat interface with message history
 - **ContactList**: Friends and groups list with status indicators
@@ -177,13 +195,30 @@ Retro MSN Messenger theme using Tailwind CSS:
 - Border Blue: `#0054A6`
 - Status Green: `#7FBA00`
 - Status Away: `#FFC40D`
+- Gradient Background: `from-[#5b9bd5] via-[#4d94ff] to-[#0066cc]`
 
 **Custom Classes:**
 
-- `.retro-window`: MSN-style window container
-- `.retro-button`: Classic button styling
-- `.retro-input`: Input field styling
-- `.status-indicator`: Online/offline/away indicators
+- `.msn-window`: MSN-style window container with header and body
+- `.msn-window-header`: Window title bar with gradient
+- `.msn-window-body`: Window content area
+- `.msn-button`: Classic button styling
+- `.msn-button-primary`: Primary action button
+- `.msn-input`: Input field styling
+- `.msn-panel`: Content panel with border
+- `.msn-divider`: Horizontal divider line
+- `.msn-status-online`: Green online indicator
+- `.msn-status-away`: Yellow away indicator
+- `.msn-message-sent`: Sent message bubble
+- `.msn-message-received`: Received message bubble
+- `.msn-message-ai`: AI message bubble (purple theme)
+- `.msn-typing`: Typing indicator with animated dots
+
+**Animations:**
+
+- `fadeIn`: Smooth fade-in effect for page elements
+- `typing-dots`: Animated typing indicator dots
+- `message-bubble-enter`: Message appearance animation
 
 ## Learn More
 

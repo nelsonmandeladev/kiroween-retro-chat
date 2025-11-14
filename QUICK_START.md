@@ -26,6 +26,8 @@ npm run dev
 
 Visit: http://localhost:3000
 
+You'll see the retro MSN Messenger-inspired landing page. Click "Sign Up Free" to create an account or "Log In" if you already have one.
+
 ## For Deployment Setup
 
 ### Step 1: Initialize Monorepo
